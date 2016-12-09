@@ -1,0 +1,40 @@
+
+@color: #428bca;
+
+.icon_style(@width:8%,@height:10%,@url:'../../images/ic_home.png',@back_size:35%,@margin-left: 15px ,  @padding-bottom: 15%){
+  width: @width;
+  height: @height;
+  background:  url(@url) no-repeat ;
+  background-size:@back_size;
+  margin-left: @margin-left ;
+  padding-bottom: @padding-bottom;
+}
+
+
+.global-header{
+  width:100%;
+  position: fixed;
+  height:50px;
+  background-color: @color;
+  left: 0;
+  top:0;
+}
+.div_inline{
+  float: left;
+}
+
+.global-header .head-left .home{
+  .icon_style;
+}
+.character{
+  color:#fff;
+  line-height:45px;
+  cursor:pointer;
+  margin-left:15px;
+  font-size:15px;
+  display:inline-block;
+
+}
+.down{
+  .icon_style(10%,10%,'../../images/ic_drop.png',35%,15px,5%);
+}

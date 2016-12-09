@@ -1,0 +1,60 @@
+<% include header.ejs%>
+
+<body  ng-app="sellingApp" ng-controller="JsonController">
+<h1>{{demotitle}}</h1>
+<h3>{{lodashContent}}</h3>
+<div>
+    <div >
+        Search: &nbsp;&nbsp;<input ng-model="query">
+    </div>
+    <br>
+    <div >
+        select by group&nbsp;&nbsp;
+        <select ng-model="myOption" ng-options="value.id as value.label group by value.group for value in myOptions">
+            <option>--</option>
+        </select>
+    </div>
+    <br>
+    <div >
+        类型：&nbsp;&nbsp;
+        <div style="display: inline" ng-dropdown-multiselect="" options="example1data" selected-model="example1model" extra-settings="example1settings"></div>
+    </div>
+
+    <br>
+    <hr>
+
+    <div id="imagePreview">
+    </div>
+    <form name="uploadForm">
+        <p>
+            <input id="imageInput" type="file" name="myPhoto" onchange="loadImageFile();" /><br />
+            <input type="submit" value="Send" /></p>
+    </form>
+
+
+    <br>
+    <hr>
+
+    <div>
+        <a href="#/json">json</a>
+        <a href="#/provider">provider</a>
+        <a href="#/login">login</a>
+        <a href="#/db">db</a>
+        <a href="#/highcharts">highcharts</a>
+    </div>
+    <hr>
+    <div ng-view></div>
+
+</div>
+<style type="text/css">
+    #imagePreview {
+        width: 160px;
+        height: 120px;
+        filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);
+    }
+</style>
+<script  src="javascripts/assets/controllers/LoadImageFile.js"></script>
+<script src="javascripts/assets/controllers/SellingController.js"></script>
+<script src="javascripts/assets/services/GetJsonFileProvider.js"></script>
+<script src="javascripts/assets/services/GetChartsProvider.js"></script>
+<%include footer.ejs%>

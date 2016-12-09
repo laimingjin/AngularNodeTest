@@ -1,0 +1,13 @@
+th{
+  vertical-align:middle;
+  text-align:center;
+}
+.zone {
+  padding: 1em;
+  background: white;
+  border-radius: 1px;
+  border: 1px solid #d8d8d8; }
+
+.levels{
+  float: left;
+}

@@ -1,0 +1,38 @@
+body {
+    margin: 3px;
+}
+.section .jumbotron  {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    border-radius: 4px;
+    background-color: #eee;
+}
+
+.block{
+    border-style:solid;
+    border-color:#eee;
+    margin-bottom:10px;
+}
+.icon_block{
+    border-style:solid;
+    border-color:#eee;
+    margin-top:10px;
+    margin-bottom:10px;
+    margin-left:20px;
+    background-color: #ffffff;
+}
+
+.line{
+    padding-left:20px;
+}
+
+.btn-icon{
+    background-color: #ffffff;
+}
+
+.table{
+    margin: 20px;
+    vertical-align: middle;
+    table-layout: fixed;
+}

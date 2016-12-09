@@ -1,0 +1,134 @@
+
+.global-header{
+    width:100%;
+    position: fixed;
+    height:50px;
+    background-color: #428bca;
+    left: 0;
+    top:0;
+}
+.div_inline{
+    float: left;
+}
+
+.global-header .head-left .home{
+    width: 8%;
+    height: 10%;
+    background:  url(../../images/ic_home.png) no-repeat ;
+    background-size:35%;
+    margin-left: 15px ;
+    padding-bottom: 15%;
+    display:inline-block;
+
+}
+.character{
+    color:#fff;
+    line-height:45px;
+    cursor:pointer;
+    margin-left:15px;
+    font-size:15px;
+    display:inline-block;
+
+}
+.down{
+    width: 10%;
+    height: 10%;
+    background:  url(../../images/ic_drop.png) no-repeat ;
+    margin-left: 15px ;
+    padding-bottom: 5%;
+    display:inline-block;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+html body .app-ihub-globalheader .global-header div{
+    display:inline-block;
+}
+html body .app-ihub-globalheader{
+    margin-bottom:50px;
+    position:absolute;
+    top:0;
+    left:0;
+    height:34px;
+    width:100%;
+   }
+html body .app-ihub-globalheader .hidden{
+    display:none}
+html body .app-ihub-globalheader .global-header{
+    width:100%;
+    position:fixed;
+    left:0;top:0;
+    height:34px;
+    background-color:#3b89de;
+    box-shadow:0 2px 3px rgba(0,0,0,.7);
+    z-index:999991;
+    padding-left:8px;
+    padding-right:10px;
+   }
+html body .app-ihub-globalheader  .global-header .ic-home{
+    height:100%;
+    width:38px;
+    background:url(../../images/ic_home.png) center no-repeat;
+    background-size:65%;
+    opacity:.7;
+    cursor:pointer;
+    display:block;
+    float:left
+}
+html body .app-ihub-globalheader  .global-header .ic-home:hover{
+    opacity:1}
+html body .app-ihub-globalheader  .global-header .ic-products{
+    color:#fff;
+    line-height:25px;
+    cursor:pointer;
+    margin-left:15px;
+    font-size:15px;
+    opacity:.7;
+    padding:0 10px;
+    transition:all .2s linear;
+    position:relative;
+    width:100px;
+    box-sizing:content-box}
+html body  .app-ihub-globalheader .global-header .ic-products:hover{
+    opacity:1}
+html body  .app-ihub-globalheader .global-header .ic-products .fa-sor-down{
+    background:url(../../images/ic_drop.png) center no-repeat;
+    background-size:100%;
+    display:block;
+    height:30px;
+    width:30px;
+    position:absolute;
+    right:2px;top:2px;
+    z-index:-1;
+    }
+html body  .app-ihub-globalheader .global-header .ic-products .fa-sor-up{
+    background:url(../../images/ic_drop.png) center no-repeat;
+    background-size:100%;
+    display:block;
+    height:30px;
+    width:30px;
+    position:absolute;
+    right:2px;top:4px;
+    z-index:-1}
+html body  .app-ihub-globalheader .global-header .ic-products.selected{
+    opacity:1;background-color:#286ebb}
+html body .app-ihub-globalheader .global-header .search .ic-search{height:37px;margin-top:3px;width:38px;background:url(../../images/ic_search.png) center no-repeat;background-size:65%;opacity:.7;cursor:pointer;float:right;position:relative;left:0}
+html body .app-ihub-globalheader .global-header .search .ic-search:hover{opacity:1}
+html body .app-ihub-globalheader .global-header .search .ic-search-input{background:0 0;border:0;height:35px;width:0;outline:0;color:#fff;cursor:pointer;float:right;padding-top:6px;-webkit-transition:all .4s ease-in-out;-moz-transition:all .4s ease-in-out;-ms-transition:all .4s ease-in-out;-m-transition:all .4s ease-in-out;transition:all .4s ease-in-out}
+html body .app-ihub-globalheader .global-header .search .ic-search-input.selected{width:200px;margin-left:-30px;padding-left:30px;border-bottom:1px solid #ccc}
+html body .app-ihub-globalheader .global-header .ic-chart{height:100%;width:38px;background:url(../../images/ic_usage.png) center no-repeat;background-size:60%;opacity:.7;cursor:pointer;float:right}
+html body .app-ihub-globalheader .global-header .ic-chart:hover{opacity:1}html body .app-ihub-globalheader .global-header .ic-info,html body .app-ihub-globalheader .global-header .ic-info2{height:100%;width:38px;background:url(../../images/ic_info.png) center no-repeat;background-size:60%;opacity:.7;cursor:pointer;float:right;position:relative}
+html body .app-ihub-globalheader .global-header .ic-info2:hover,html body .app-ihub-globalheader .global-header .ic-info:hover{opacity:1}
+html body .app-ihub-globalheader .global-header .ic-info span.dot,html body .app-ihub-globalheader .global-header .ic-info2 span.dot{content:'';height:5px;width:5px;background-color:red;display:block;position:absolute;left:25px;top:10px;z-index:100;border-radius:5px}
+html body .app-ihub-globalheader .global-header .ic-setting{height:100%;width:38px;margin-right:5px;background:url(../../images/ic_settings.png) center no-repeat;background-size:60%;opacity:.7;cursor:pointer;float:right}
+html body .app-ihub-globalheader .global-header .ic-setting:hover{opacity:1}html body .app-ihub-globalheader .global-header .ic-question{height:100%;width:38px;background:url(../../images/ic_question.png) center no-repeat;background-size:60%;opacity:.7;cursor:pointer;float:right}
+html body .app-ihub-globalheader .global-header .ic-question:hover{opacity:1}

@@ -1,0 +1,16 @@
+[
+  {"item":"test111",
+  "completionRate":2,
+  "photoCountPerDraft":2.2,
+  "avgListingTime":60,
+  "titleLengthPerDraft":3.6,
+  "errorCountPerDraft":3.5
+  },
+  {"item":"test2",
+    "completionRate":1,
+    "photoCountPerDraft":3.2,
+    "avgListingTime":60,
+    "titleLengthPerDraft":3.6,
+    "errorCountPerDraft":3.5
+  }
+]

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<html ng-app="app">
+  <head>
+    <title>Seller</title>
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--STYLES-->
+    <link rel="stylesheet" href="/stylesheets/dependencies/font-awesome.min.css">
+    <link rel="stylesheet" href="/stylesheets/dependencies/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/dependencies/animate.css">
+    <link rel="stylesheet" href="/stylesheets/dependencies/hover-min.css">
+    <link rel="stylesheet" href="/stylesheets/dependencies/github.min.css">
+    <link rel="stylesheet" href="/stylesheets/dependencies/importer.css">
+    <!--STYLES END-->
+  </head>
+
+  <body>
+
+  <!--LANDING PAGE STARTS OVER HERE-->
+<div ng-controller="LandingPageController as landCtl"  class="containerWrap" ng-init="landCtl.initial()">
+    <div class="ihub-ui-breadcrumb" style="position: static"><span ng-show="landCtl.isMainPage">{{landCtl.navTitleIndex}}</span><a href="/" target="_blank" ng-show="!landCtl.isMainPage">{{landCtl.navTitleIndex}}</a><span>{{landCtl.navTitleDetail}}</span></div>
+
+<div class="container" ng-show="false"><!--landCtl.showAlert-->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="alert alert-warning alert-dismissible" role="alert"><button ng-click="landCtl.showAlert=false" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Seller Insighs Overview is during realease for adding new data, daily level data will catch up soon.</div>
+    </div>
+  </div>
+</div>
+
+<div class="animation coverLoading" ng-class="{'coverLoadingTrans':landCtl.defaultCoverLoadingTrans===1}" ng-show="landCtl.coverLoading"><div class="spinner">
+  <i class="ihub-ui-spinner"></i>
+</div>
+</div>
+    <div class="container">
+    <!--FILTER NAV BAR LAYER-->
+    <nav class="navbar navbar-default navWrap">
+        <!--
+        <div id="verticalLine" ng-hide="landCtl.searchHide"></div>
+        -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left landingPageNav">
+
+                <li class="navLiMargin" ng-show="landCtl.metricsTypeFilterShow">
+                  <label class="filterLabel">Metrics Type</label>
+                  <div class="dropdown">
+                        <dropdown-multiselect type="0" events="landCtl.filterEvent" setting="landCtl.filter_setting_single" options="landCtl.filterMetricsType_dataSource" model="landCtl.filterMetricsType_model"></dropdown-multiselect>
+                  </div>
+                </li>
+
+                <li class="navLiMargin">
+                    <label class="filterLabel">Daily / Weekly</label>
+                    <div class="dropdown">
+                        <dropdown-multiselect type="100" events="landCtl.filterEvent" setting="landCtl.filter_setting_single" options="landCtl.filterDaily_traling_7days_dataSource" model="landCtl.filterDaily_traling_7days_model"></dropdown-multiselect>
+                    </div>
+                </li>
+
+                <li class="navLiMargin">
+                    <label class="filterLabel">B2C/C2C</label>
+                    <div class="dropdown">
+                        <dropdown-multiselect type="0"  events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filterB2C_C2C_dataSource" model="landCtl.filterB2C_C2C_model"></dropdown-multiselect>
+                    </div>
+                </li>
+
+                <li class="navLiMargin">
+                    <label class="filterLabel">Seller Country</label>
+                    <div class="dropdown">
+                        <dropdown-multiselect type="0"  events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filterlisting_Site_dataSource" model="landCtl.filterlisting_Site_model"></dropdown-multiselect>
+
+                    </div>
+                </li>
+
+                <li class="navLiMargin">
+                    <label class="filterLabel">Listing Site</label>
+                    <div class="dropdown">
+                        <dropdown-multiselect type="0" events="landCtl.filterEvent" setting="landCtl.condition_filter_setting" options="landCtl.filterSeller_slr_country_dataSource" model="landCtl.filterSeller_slr_country_model"></dropdown-multiselect>
+                    </div>
+                </li>
+
+                <li class="navLiMargin">
+                    <label class="filterLabel">Seller Segment</label>
+                    <div class="dropdown">
+                        <dropdown-multiselect type="0" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filterSeller_segment_dataSource" model="landCtl.filterSeller_segment_model"></dropdown-multiselect>
+                    </div>
+                </li>
+
+
+                <li class="navLiMargin" style="position:relative">
+                    <label class="filterLabel">Experience Type</label>
+                    <div class="dropdown">
+                        <dropdown-multiselect type="0" events="landCtl.filterEvent" setting="landCtl.condition_filter_setting" options="landCtl.filterPlatformMultiSelect_dataSource" model="landCtl.filterPlatformMultiSelect_model"></dropdown-multiselect>
+                    </div>
+                </li>
+
+                <li>
+                  <button type="button" class="btn btn-sm btn-primary applyFilterBtn" ng-click="landCtl.applyFilter()">Apply</button>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-left landingPageNav gap">
+              <!-- Auction Type added--->
+              <li class="navLiMargin"  ng-show="landCtl.showExtraFilter && landCtl.listingFormat_show">
+                  <label class="filterLabel">Listing Format</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect type="0" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filterAuctionType_dataSource" model="landCtl.filterAuctionType_model"></dropdown-multiselect>
+                  </div>
+              </li>
+
+              <li class="navLiMargin"  ng-show="landCtl.showExtraFilter && landCtl.norsType_show">
+                  <label class="filterLabel">New/Reactive</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect type="0" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filterNorsType_dataSource" model="landCtl.filterNorsType_model"></dropdown-multiselect>
+                  </div>
+              </li>
+
+              <!-- Vertical -->
+              <li class="navLiMargin"   ng-show="landCtl.showExtraFilter && !landCtl.listingToolOnly && !landCtl.norsType_show">
+                  <label class="filterLabel">Vertical</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect type="1" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filterVertical_dataSource" model="landCtl.filterVertical_model"></dropdown-multiselect>
+                  </div>
+              </li>
+
+              <!-- Listing Channel -->
+              <li class="navLiMargin"  ng-show="landCtl.showExtraFilter && landCtl.listingChannel_show">
+                  <label class="filterLabel">Listing Channel</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect type="1" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filter_listing_channel_dataSource" model="landCtl.filter_listing_channel_model"></dropdown-multiselect>
+                  </div>
+              </li>
+
+              <!-- Listing Tool-->
+              <li class="navLiMargin"  ng-show="landCtl.showExtraFilter && landCtl.listingToolSpecific_show && !landCtl.norsType_show">
+                  <label class="filterLabel">Listing Tool</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect type="1" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filter_listing_tool_dataSource" model="landCtl.filter_listing_tool_model"></dropdown-multiselect>
+                  </div>
+              </li>
+
+              <!-- draft -->
+              <li class="navLiMargin"  ng-show="landCtl.showExtraFilter && landCtl.draftSpecific_show">
+                  <label class="filterLabel">Draft Y/N</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect type="1"  events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filter_draft_dataSource" model="landCtl.filter_draft_model"></dropdown-multiselect>
+                  </div>
+              </li>
+
+              <!-- traffic source -->
+              <li class="navLiMargin"  ng-show="landCtl.showExtraFilter && landCtl.trafficSourceSpecific_show">
+                  <label class="filterLabel">Traffic Source</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect  type="1" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filter_traffic_source_dataSource" model="landCtl.filter_traffic_source_model"></dropdown-multiselect>
+                  </div>
+              </li>
+
+              <!-- seller hub whitelist yn-->
+              <li class="navLiMargin"  ng-show="landCtl.showExtraFilter && landCtl.sellerHub_show">
+                  <label class="filterLabel">Seller Hub Subscription Y/N</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect  type="1" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filter_sellerHub_dataSource" model="landCtl.filter_sellerHub_model"></dropdown-multiselect>
+                  </div>
+              </li>
+
+              <!--
+              <li class="navLiMargin"   ng-show="landCtl.showExtraFilter">
+                  <label class="filterLabel">MSKU</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect type="1" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filterMsku_yn_dataSource" model="landCtl.filterMsku_yn_model"></dropdown-multiselect>
+                  </div>
+              </li>
+              <li class="navLiMargin"  ng-show="landCtl.showExtraFilter">
+                  <label class="filterLabel">ETRS SLR TYPE</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect type="1" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filter_estr_slr_type_dataSource" model="landCtl.filter_estr_slr_type_model"></dropdown-multiselect>
+                  </div>
+              </li>
+
+              <li class="navLiMargin"  ng-show="landCtl.showExtraFilter && landCtl.cbtSpecificCase">
+                  <label class="filterLabel">CBT</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect type="1" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filter_cbt_yn_dataSource" model="landCtl.filter_cbt_yn_model"></dropdown-multiselect>
+                  </div>
+              </li>
+
+              <li class="navLiMargin"   ng-show="landCtl.showExtraFilter">
+                  <label class="filterLabel">Listing Channel</label>
+                  <div class="dropdown">
+                      <dropdown-multiselect type="1" events="landCtl.filterEvent" setting="landCtl.filter_setting_multiple" options="landCtl.filter_lstg_channel_dataSource" model="landCtl.filter_lstg_channel_model"></dropdown-multiselect>
+                  </div>
+              </li>
+            -->
+            </ul>
+
+            <div class="row">
+              <div class="col-lg-12 gap" style="display:flex;align-items:center;justify-content:center" ng-show="landCtl.showExtraFilterBtnDown">
+                <!-- show more -->
+                <span class="morefilter {{landCtl.moreButton}}"   ng-click="landCtl.clickShowExtraFilter()"></span>
+              </div>
+            </div>
+
+            <!--
+            <ui class="nav navbar-nav navbar-right" ng-hide="landCtl.searchHide">
+                <li class="navLiMargin">
+                    <label class="filterLabel">Search for Seller</label>
+                    <div class="searchWrap">
+                        <span class="fa fa-search" > </span>
+                        <input type="text" class="form-control navSearch" placeholder="seller user id or name...">
+                    </div>
+                </li>
+            </ui>
+            -->
+        </div>
+    </nav>
+</div>
+
+    <div class="container wrapPosition">
+        <div class="animation zoneFilterLoading"><i class="fa fa-cog fa-2x fa-spin"></i></div>
+        <!--NUMBER ZONE-->
+        <div class="row">
+
+            <!--LEFT NUMBER ZONE-->
+            <div class="col-lg-7">
+              <div class="row"><div class="col-lg-12"><h6>{{landCtl.displayDateLeft}}</h6></div></div>
+                <!--NUMBER ZONE INDIVIDUALLY LEFT-->
+                <ul class="nav nav-pills numberZone numberZone_left">
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive"  ng-click="landCtl.headToDetailView('GMV',1,'leftNumberZone',0,'GMV',1)">
+                        <div class="numberTilte numberStyle">GMV(${{landCtl.number_GMV_value_type}})</div>
+                        <div ng-show="landCtl.isValueLeft" class="numberValue numberStyle" count-up end-val="landCtl.number_GMV_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span> <span count-up end-val="landCtl.number_GMV_YOY_Rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_GMV_caret}}"></i></div>
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueLeft" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+
+
+                        <!-- add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_GMV_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_GMV_WOW_caret}}"></i></div>
+
+                    </li>
+
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('Daily AVG LL',1,'leftNumberZone',0,'Daily AVG LL',1)">
+                        <div class="numberTilte numberStyle">Daily AVG LL({{landCtl.number_liveListing_value_type}}) </div>
+                        <div ng-show="landCtl.isValueLeft" class="numberValue numberStyle" count-up end-val="landCtl.number_liveListing_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span> <span count-up end-val="landCtl.number_liveListing_YOY_Rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_liveListing_caret}}"></i></div>
+
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueLeft" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+
+                        <!-- add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_liveListing_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_liveListing_WOW_caret}}"></i></div>
+
+                    </li>
+
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('Sold Item',1,'leftNumberZone',0,'Sold Item',1)">
+                        <div class="numberTilte numberStyle">Sold Item({{landCtl.number_soldItem_value_type}})</div>
+                        <div ng-show="landCtl.isValueLeft" class="numberValue numberStyle" count-up end-val="landCtl.number_soldItem_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span><span count-up end-val="landCtl.number_soldItem_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>% <i class="{{landCtl.number_soldItem_caret}}"></i></div>
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueLeft" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+                        <!-- add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_soldItem_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_soldItem_WOW_caret}}"></i></div>
+
+                    </li>
+
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('ASP',1,'leftNumberZone',0,'ASP',1)">
+                        <div class="numberTilte numberStyle">ASP($) </div>
+                        <div ng-show="landCtl.isValueLeft" class="numberValue numberStyle" count-up end-val="landCtl.number_asp_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span><span count-up end-val="landCtl.number_asp_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_asp_caret}}"></i></div>
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueLeft" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+                        <!--add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span><span count-up end-val="landCtl.number_asp_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_asp_WOW_caret}}"></i></div>
+
+                    </li>
+
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('New Listing',1,'leftNumberZone',0,'New LSTG',1)">
+                        <div class="numberTilte numberStyle">New LSTG({{landCtl.number_newListing_value_type}}) </div>
+                        <div ng-show="landCtl.isValueLeft" class="numberValue numberStyle" count-up end-val="landCtl.number_newListing_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span><span count-up end-val="landCtl.number_newListing_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_newListing_caret}}"></i></div>
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueLeft" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+                        <!--add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_newListing_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_newListing_WOW_caret}}"></i></div>
+
+                    </li>
+
+
+
+
+                </ul>
+
+            </div>
+
+
+
+            <!--RIGHT NUMBER ZONE-->
+            <div class="col-lg-5">
+              <div class="row"><div class="col-lg-12"><h6>{{landCtl.displayDateRight}}</h6></div></div>
+
+                <!--NUMBER ZONE INDIVIDUALLY RIGHT-->
+                <ul class="nav nav-pills numberZone numberZone_right">
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('Listers',0,'rightNumberZone',0,'Listers',5)">
+                        <div class="numberTilte numberStyle">Listers({{landCtl.number_listers_value_type}}) </div>
+                        <div ng-show="landCtl.isValueRight" class="numberValue numberStyle" count-up end-val="landCtl.number_listers_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span> <span count-up end-val="landCtl.number_listers_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_listers_caret}}"></i></div>
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueRight" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+
+                        <!--add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_listers_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_listers_WOW_caret}}"></i></div>
+
+                    </li>
+
+
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('Seller',0,'rightNumberZone',0,'Sellers',5)">
+                        <div class="numberTilte numberStyle">Seller({{landCtl.number_seller_value_type}}) </div>
+                        <div ng-show="landCtl.isValueRight" class="numberValue numberStyle" count-up end-val="landCtl.number_seller_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span> <span count-up end-val="landCtl.number_seller_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_seller_caret}}"></i></div>
+
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueRight" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+
+                        <!--add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_seller_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_seller_WOW_caret}}"></i></div>
+
+                    </li>
+
+
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('FTLs',0,'rightNumberZone',0,'FTLs',5)">
+                        <div class="numberTilte numberStyle">FTLs({{landCtl.number_ftls_value_type}})</div>
+                        <div ng-show="landCtl.isValueRight" class="numberValue numberStyle" count-up end-val="landCtl.number_ftls_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span> <span count-up end-val="landCtl.number_ftls_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_ftls_caret}}"></i></div>
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueRight" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+
+
+                        <!--add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_ftls_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_ftls_WOW_caret}}"></i></div>
+
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+
+        <!--second zone-->
+        <div class="row">
+
+            <!--LEFT NUMBER ZONE-->
+            <div class="col-lg-7">
+                <!--NUMBER ZONE INDIVIDUALLY LEFT-->
+                <ul class="nav nav-pills numberZone numberZone_left numberZone_border_top_override">
+                  <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('STR',1,'leftNumberZone',0,'STR%',1)">
+                      <div class="numberTilte numberStyle">STR(%) </div>
+                      <div ng-show="landCtl.isValueLeft" class="numberValue numberStyle" count-up end-val="landCtl.number_str_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                      <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span><span count-up end-val="landCtl.number_str_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_str_caret}}"></i></div>
+
+                      <!--none value-->
+                      <div ng-show="!landCtl.isValueLeft" class="numberValue numberStyle">--</div>
+                      <div ng-show="!landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                      <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+
+                      <!-- add wow-->
+                      <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_str_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_str_WOW_caret}}"></i></div>
+
+                  </li>
+
+
+                  <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('FNL',1,'leftNumberZone',0,'FNL',4)">
+                      <div class="numberTilte numberStyle">FNL({{landCtl.number_fnl_value_type}}) </div>
+                      <div ng-show="landCtl.isValueLeft" class="numberValue numberStyle" count-up end-val="landCtl.number_fnl_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                      <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span><span count-up end-val="landCtl.number_fnl_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_fnl_caret}}"></i></div>
+
+                      <!--none value-->
+                      <div ng-show="!landCtl.isValueLeft" class="numberValue numberStyle">--</div>
+                      <div ng-show="!landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                      <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+
+
+                      <!-- add wow-->
+                      <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_fnl_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_fnl_WOW_caret}}"></i></div>
+
+                  </li>
+
+                  <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('1st Gen Listing',1,'leftNumberZone',0,'1st Gen Listing',1)">
+                      <div class="numberTilte numberStyle">1st Gen LSTG({{landCtl.number_fst_lgst_value_type}}) </div>
+                      <div ng-show="landCtl.isValueLeft" class="numberValue numberStyle" count-up end-val="landCtl.number_fst_lgst_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                      <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span><span count-up end-val="landCtl.number_fst_lgst_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_fst_lgst_caret}}"></i></div>
+
+                      <!--none value-->
+                      <div ng-show="!landCtl.isValueLeft" class="numberValue numberStyle">--</div>
+                      <div ng-show="!landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                      <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+                      <!-- add wow-->
+                      <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_fst_lgst_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_fst_lgst_WOW_caret}}"></i></div>
+
+                  </li>
+
+
+
+                  <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('Product Adoption',1,'leftNumberZone',0,'Product Adoption',1)">
+                      <div class="numberTilte numberStyle">Product Adoption({{landCtl.number_prod_lstg_value_type}}) </div>
+                      <div ng-show="landCtl.isValueLeft" class="numberValue numberStyle" count-up end-val="landCtl.number_prod_lstg_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                      <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span><span count-up end-val="landCtl.number_prod_lstg_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_prod_lstg_caret}}"></i></div>
+
+                      <!--none value-->
+                      <div ng-show="!landCtl.isValueLeft" class="numberValue numberStyle">--</div>
+                      <div ng-show="!landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                      <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+                      <!-- add wow-->
+                      <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_prod_lstg_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_prod_lstg_WOW_caret}}"></i></div>
+
+                  </li>
+                </ul>
+            </div>
+
+
+
+            <!--RIGHT NUMBER ZONE-->
+            <div class="col-lg-5">
+
+                <!--NUMBER ZONE INDIVIDUALLY RIGHT-->
+                <ul class="nav nav-pills numberZone numberZone_right numberZone_border_top_override">
+
+
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('FTS',0,'rightNumberZone',0,'FTS',5)">
+                        <div class="numberTilte numberStyle">FTS({{landCtl.number_fts_value_type}}) </div>
+                        <div ng-show="landCtl.isValueRight" class="numberValue numberStyle" count-up end-val="landCtl.number_fts_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span> <span count-up end-val="landCtl.number_fts_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_fts_caret}}"></i></div>
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueRight" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+
+                        <!--add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_fts_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_fts_WOW_caret}}"></i></div>
+
+                    </li>
+
+
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('NoRS',0,'rightNumberZone',0,'NoRS',5)">
+                        <div class="numberTilte numberStyle">NoRS({{landCtl.number_nors_value_type}}) </div>
+                        <div ng-show="landCtl.isValueRight" class="numberValue numberStyle" count-up end-val="landCtl.number_nors_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span> <span count-up end-val="landCtl.number_nors_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_nors_caret}}"></i></div>
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueRight" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+
+                        <!--add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_nors_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_nors_WOW_caret}}"></i></div>
+
+                    </li>
+
+                    <li popover-trigger="mouseenter"  popover-placement="bottom" uib-popover="Deep Dive" ng-click="landCtl.headToDetailView('1st Gen Lister',0,'rightNumberZone',0,'1st Gen Lister',5)">
+                        <div class="numberTilte numberStyle">1st Gen Lister({{landCtl.number_fst_lister_value_type}}) </div>
+                        <div ng-show="landCtl.isValueRight" class="numberValue numberStyle" count-up end-val="landCtl.number_fst_lister_value" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></div>
+                        <div ng-show="landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span> <span count-up end-val="landCtl.number_fst_lister_YOY_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%<i class="{{landCtl.number_fst_lister_caret}}"></i></div>
+
+                        <!--none value-->
+                        <div ng-show="!landCtl.isValueRight" class="numberValue numberStyle">--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>YOY: </span>--</div>
+                        <div ng-show="!landCtl.isValueRight" class="numberSecondValue numberStyle"><span>WOW: </span>--</div>
+
+
+                        <!--add wow-->
+                        <div ng-show="landCtl.isValueLeft" class="numberSecondValue numberStyle"><span>WOW: </span> <span count-up end-val="landCtl.number_fst_lister_WOW_rate" decimals="landCtl.animated_decimals" duration="landCtl.number_Increase_Duration"></span>%</span> <i class="{{landCtl.number_fst_lister_WOW_caret}}"></i></div>
+
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+
+
+
+
+        <!--TAB ZONE-->
+        <uib-tabset class="gap">
+            <uib-tab heading="Actual" style="position:relative">
+                <!--TAB CONTENT ROW ONE-->
+                <div class="row">
+                      <!--TAB CONTENT ROW ONE WITH LINER-->
+                      <div class="col-md-8 col-lg-8">
+                          <div class="tabContent">
+                              <div class="row restMargin">
+                                  <div class="col-md-4 col-lg-4 highchartStyle"  ng-mouseover="landCtl.showCodeByMouseOver('Traffic_act')" ng-mouseleave="landCtl.showCodeByMouseOver('Traffic_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Traffic',0,'none',2,'Traffic',2)"></i><highchart class="highchartLineStyle" config="landCtl.chartTraffic" id="hightCharts_Traffic"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='Traffic_act','fadeOut':landCtl.fadeInValue==='Traffic_deact'}" ng-click="landCtl.fetchCode('Traffic',2)" aria-hidden="true"></i></div>
+                                  <div class="col-md-4 col-lg-4 highchartStyle"  ng-mouseover="landCtl.showCodeByMouseOver('ListingAttempt_act')" ng-mouseleave="landCtl.showCodeByMouseOver('ListingAttempt_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Listing Attempt',0,'none',2,'Listing Attempt',2)"></i><highchart class="highchartLineStyle" config="landCtl.chartListingAttempt" id="hightCharts_ListingAttempt"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='ListingAttempt_act','fadeOut':landCtl.fadeInValue==='ListingAttempt_deact'}" ng-click="landCtl.fetchCode('Listing Attempt',2)" aria-hidden="true"></i></div>
+                                  <div class="col-md-4 col-lg-4 highchartStyle"  ng-mouseover="landCtl.showCodeByMouseOver('SuccessfulListingAttempt_act')" ng-mouseleave="landCtl.showCodeByMouseOver('SuccessfulListingAttempt_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Successful Listing Attempt',0,'none',2,'Successful ListingAttempt',2)"></i><highchart class="highchartLineStyle" config="landCtl.chartSuccessfulListing" id="hightCharts_SuccessfulListing"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='SuccessfulListingAttempt_act','fadeOut':landCtl.fadeInValue==='SuccessfulListingAttempt_deact'}" ng-click="landCtl.fetchCode('Successful ListingAttempt',2)" aria-hidden="true"></i></div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="tabContent">
+                          <div class="row"><div class="col-lg-12"><h6 class="funnelLeftPadding">{{landCtl.funnelTrafficDate}}</h6></div></div>
+                          <highchart ng-show="landCtl.funnelTrafficShown" class="funnel_1_HightChartStyle" config="landCtl.trafficFunnelConfig"></highchart>
+                          <div class="funnel_1_HightChartStyle" ng-show="!landCtl.funnelTrafficShown"><h1>--</h1></div>
+                        </div>
+                      </div>
+                </div>
+
+                <!--TAB CONTENT ROW TWO-->
+                <div class="row gap">
+                    <!--TAB CONTENT ROW TWO WITH LINER-->
+                    <div class="col-md-8 col-lg-8">
+                        <div class="tabContent">
+                            <div class="row restMargin">
+                                <div class="col-md-4 col-lg-4 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('LiveListing_act')" ng-mouseleave="landCtl.showCodeByMouseOver('LiveListing_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Live Listing',0,'none',3,'Live Listing',3)"></i><highchart class="highchartLineStyle bottom_border_line " config="landCtl.chartLiveListing" id="hightCharts_LiveListing"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='LiveListing_act','fadeOut':landCtl.fadeInValue==='LiveListing_deact'}" ng-click="landCtl.fetchCode('Live Listing',3)" aria-hidden="true"></i></div>
+                                <div class="col-md-4 col-lg-4 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('EffectiveListing_act')" ng-mouseleave="landCtl.showCodeByMouseOver('EffectiveListing_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Effective Listing',0,'none',3,'Effective Listing',3)"></i><highchart class="highchartLineStyle bottom_border_line " config="landCtl.chartEffectiveListing" id="hightCharts_EffectiveListing"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='EffectiveListing_act','fadeOut':landCtl.fadeInValue==='EffectiveListing_deact'}" ng-click="landCtl.fetchCode('Effective Listing',3)" aria-hidden="true"></i></div>
+                                <div class="col-md-4 col-lg-4 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('DemandedListing_act')" ng-mouseleave="landCtl.showCodeByMouseOver('DemandedListing_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Demanded Listing',0,'none',3,'Demanded Listing',3)"></i><highchart class="highchartLineStyle bottom_border_line " config="landCtl.chartDemandedListing" id="hightCharts_DemandedListing"></highchart><i title="SQL" class="fa fa-file-code-o  fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='DemandedListing_act','fadeOut':landCtl.fadeInValue==='DemandedListing_deact'}" ng-click="landCtl.fetchCode('Demanded Listing',3)" aria-hidden="true"></i></div>
+                                <div class="col-md-4 col-lg-4 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('WantedListing_act')" ng-mouseleave="landCtl.showCodeByMouseOver('WantedListing_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Wanted Listing',0,'none',3,'Wanted Listing',3)"></i><highchart class="highchartLineStyle" config="landCtl.chartWantedListing" id="hightCharts_WantedListing"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='WantedListing_act','fadeOut':landCtl.fadeInValue==='WantedListing_deact'}" ng-click="landCtl.fetchCode('Wanted Listing',3)" aria-hidden="true"></i></div>
+                                <div class="col-md-4 col-lg-4 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('SuccessfulListing_act')" ng-mouseleave="landCtl.showCodeByMouseOver('SuccessfulListing_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Successful Listing',0,'none',3,'Successful Listing',3)"></i><highchart class="highchartLineStyle" config="landCtl.chartSuccessListing" id="hightCharts_SuccessListing"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='SuccessfulListing_act','fadeOut':landCtl.fadeInValue==='SuccessfulListing_deact'}" ng-click="landCtl.fetchCode('Successful Listing',3)" aria-hidden="true"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                      <div class="tabContent">
+                        <div class="row"><div class="col-lg-12"><h6 class="funnelLeftPadding">{{landCtl.funnelInvDate}}</h6></div></div>
+                        <highchart class="funnel_2_HightChartStyle" ng-show="landCtl.funnelDmndisShown" config="landCtl.dmndFunnelConfig"></highchart>
+                        <div class="funnel_2_HightChartStyle" ng-show="!landCtl.funnelDmndisShown"><h1>--</h1></div>
+                      </div>
+                    </div>
+                </div>
+            </uib-tab>
+
+            <uib-tab heading="Funnel Rate" style="position:relative">
+                <!--TAB CONTENT ROW ONE-->
+                <div class="row">
+                    <!--TAB CONTENT ROW ONE WITH LINER-->
+                    <div class="col-md-8 col-lg-8">
+                        <div class="tabContent">
+                            <div class="row restMargin">
+                                <div  class="col-md-6 col-lg-6 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('AttemptRate_act')" ng-mouseleave="landCtl.showCodeByMouseOver('AttemptRate_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Attempt Rate',0,'none',0,'Attempt Rate',2)"></i><highchart class="highchartLineStyle  conversionRateHighChartSyle specificHighChartStyle" config="landCtl.chartListing_Attempt_Traffic" id="hightCharts_Listing_Attempt_Traffic"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='AttemptRate_act','fadeOut':landCtl.fadeInValue==='AttemptRate_deact'}" ng-click="landCtl.fetchCode('Attempt Rate',2)" aria-hidden="true"></i></div>
+                                <div  class="col-md-6 col-lg-6 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('CompletionRate_act')" ng-mouseleave="landCtl.showCodeByMouseOver('CompletionRate_deact')" style="border:0px"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Completion Rate',0,'none',2,'Completion Rate',2)"></i><highchart class="highchartLineStyle  conversionRateHighChartSyle specificHighChartStyle" config="landCtl.chartSuccessful_Listing_Attempt_Listing_Attempt" id="hightCharts_Successful_Listing_Attempt_Listing_Attempt"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='CompletionRate_act','fadeOut':landCtl.fadeInValue==='CompletionRate_deact'}"  ng-click="landCtl.fetchCode('Completion Rate',2)" aria-hidden="true"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="tabContent">
+                          <div class="row"><div class="col-lg-12"><h6 class="funnelLeftPadding">{{landCtl.funnelTrafficDate}}</h6></div></div>
+                          <highchart ng-show="landCtl.funnelTrafficShown" class="funnel_1_HightChartStyle" config="landCtl.trafficFunnelConfig"></highchart>
+                          <div class="funnel_1_HightChartStyle" ng-show="!landCtl.funnelTrafficShown"><h1>--</h1></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--TAB CONTENT ROW TWO-->
+                <div class="row gap">
+                    <!--TAB CONTENT ROW TWO WITH LINER-->
+                    <div class="col-md-8 col-lg-8">
+                        <div class="tabContent">
+                            <div class="row restMargin">
+                                <div class="col-md-4 col-lg-4 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('EffectiveListing_LiveListing_act')" ng-mouseleave="landCtl.showCodeByMouseOver('EffectiveListing_LiveListing_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Effective Listing / Live Listing',0,'none',3,'Effective Listing / Live Listing',3)"></i><highchart class="highchartLineStyle bottom_border_line normalHighChartStyle " config="landCtl.chartEffective_Listing_Live_Listing" id="hightCharts_Effective_Listing_Live_Listing"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='EffectiveListing_LiveListing_act','fadeOut':landCtl.fadeInValue==='EffectiveListing_LiveListing_deact'}" ng-click="landCtl.fetchCode('Effective Listing / Live Listing',3)" aria-hidden="true"></i></div>
+                                <div class="col-md-4 col-lg-4 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('DemandedListing_EffectiveListing_act')" ng-mouseleave="landCtl.showCodeByMouseOver('DemandedListing_EffectiveListing_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Demanded Listing / Effective Listing',0,'none',3,'Demanded Listing / Effective Listing',3)"></i><highchart class="highchartLineStyle  bottom_border_line normalHighChartStyle" config="landCtl.chartDemanded_Listing_Effective_Listing" id="hightCharts_Demanded_Listing_Effective_Listing"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='DemandedListing_EffectiveListing_act','fadeOut':landCtl.fadeInValue==='DemandedListing_EffectiveListing_deact'}" ng-click="landCtl.fetchCode('Demanded Listing / Effective Listing',3)" aria-hidden="true"></i></div>
+                                <div class="col-md-4 col-lg-4 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('WantedListing_DemandedListing_act')" ng-mouseleave="landCtl.showCodeByMouseOver('WantedListing_DemandedListing_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Wanted Listing / Demanded Listing',0,'none',3,'Wanted Listing / Demanded Listing',3)"></i><highchart class="highchartLineStyle bottom_border_line normalHighChartStyle" config="landCtl.chartWanted_Listing_Demanded_Listing" id="hightCharts_Wanted_Listing_Demanded_Listing"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='WantedListing_DemandedListing_act','fadeOut':landCtl.fadeInValue==='WantedListing_DemandedListing_deact'}" ng-click="landCtl.fetchCode('Wanted Listing / Demanded Listing',3)" aria-hidden="true"></i></div>
+                                <div class="col-md-4 col-lg-4 highchartStyle" ng-mouseover="landCtl.showCodeByMouseOver('SuccessfulListing_WantedListing_act')" ng-mouseleave="landCtl.showCodeByMouseOver('SuccessfulListing_WantedListing_deact')"><i title="Deep Dive" class="icon-clone" ng-click="landCtl.headToDetailView('Successful Listing / Wanted Listing',0,'none',3,'Successful Listing / Wanted Listing',3)"></i><highchart class="highchartLineStyle normalHighChartStyle" config="landCtl.chartSuccessful_Listing_Wanted_Listing" id="hightCharts_Successful_Listing_Wanted_Listing"></highchart><i title="SQL" class="fa fa-file-code-o fa-file-code-o-index animated " ng-class="{'fadeIn':landCtl.fadeInValue==='SuccessfulListing_WantedListing_act','fadeOut':landCtl.fadeInValue==='SuccessfulListing_WantedListing_deact'}" ng-click="landCtl.fetchCode('Successful Listing / Wanted Listing',3)" aria-hidden="true"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <div class="tabContent">
+                          <div class="row"><div class="col-lg-12"><h6 class="funnelLeftPadding">{{landCtl.funnelInvDate}}</h6></div></div>
+                          <highchart ng-show="landCtl.funnelDmndisShown" class="funnel_2_HightChartStyle" config="landCtl.dmndFunnelConfig"></highchart>
+                          <div class="funnel_2_HightChartStyle" ng-show="!landCtl.funnelDmndisShown"><h1>--</h1></div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+    <!--modal -->
+    <!-- detail view -->
+<script type="text/ng-template" id="maxDetailModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <highchart config="detailChartFullScreen"></highchart>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default btn-sm" type="button" ng-click="close()">Close</button>
+    </div>
+</script>
+
+<!-- code view-->
+<script type="text/ng-template" id="codeViewlModal.html">
+  <div ng-init = "initalCheck()">
+    <div class="modal-header" style="position:relative">
+        <!--title-->
+        <h5 class="modal-title">{{title}}</h5><div class="input-group-sm" ng-show="isEnable"><input type="text" class="form-control col-log-7" placeholder="{{title}}"  ng-model="title"></div><button ng-click="close()" type="button" class="close" style="position:absolute;right:15px;top:17px"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+
+      <!--formula -->
+      <div class="modal-subHead"><b>Metric Formula:</b> {{metric_formula}}<div class="input-group-sm" ng-show="isEnable"><input type="text" class="form-control col-log-7" ng-model="metric_formula" placeholder="{{metric_formula}}"></div></div>
+
+      <!--contact -->
+      <div class="modal-subHead"><b>Analyst Contact:</b> {{analyst_contact}}<div class="input-group-sm" ng-show="isEnable"><input type="text" class="form-control col-log-7" ng-model="analyst_contact" placeholder="{{analyst_contact}}"></div></div>
+
+      <!--contact -->
+      <div class="modal-subHead">
+        <div class="row">
+          <div class="col-lg-6"><b>Backend Query: ({{time}})</b></div>
+          <div class="col-lg-6"><a class="pull-right" href="" ng-click="downloadCode()"><span class="fa fa-download"></span> Download SQL</a></div>
+        </div>
+      </div>
+
+      <!--backend query -->
+      <div class="row gap">
+        <div class="col-lg-12">
+          <textarea ng-show="isEnable" class="form-control" rows="20" ng-model="content">{{content}}</textarea>
+          <div ng-hide="!codeContentLoading && isEnable" hljs hljs-source="content"></div>
+          <div class="row" ng-show="codeContentLoading"><div class="col-lg-12"><div class="spinner">
+  <i class="ihub-ui-spinner"></i>
+</div>
+</div></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" ng-click="clickAdminUpdateButton()" ng-show="adminModel && isEnable">Save</button>
+        <button class="btn btn-primary btn-sm" ng-click="clickAdminEditButton()" ng-show="adminModel && !isEnable">Edit</button>
+        <button class="btn btn-default btn-sm" type="button" ng-click="close()">Close</button>
+    </div>
+  </div>
+</script>
+
+    <div class="product_wiki_link" ng-hide="true">https://wiki.vip.corp.ebay.com/x/hTlrF</div>
+
+
+    <!--add page tracker -->
+    <div id="data-app">selling</div>
+    <div id="data-pagename">{{landCtl.pageName}}</div>
+</div>
+
+
+
+
+  </body>
+<!--SCRIPTS-->
+<script src="/js/dependencies/sails.io.js"></script>
+<script src="/js/dependencies/jquery-2.1.4.min.js"></script>
+<script src="/js/dependencies/lodash.min.js"></script>
+<script src="/js/dependencies/bootstrap.min.js"></script>
+<script src="/js/dependencies/angular.min.js"></script>
+<script src="/js/dependencies/angular-multi-dropdown.js"></script>
+<script src="/js/dependencies/ui-bootstrap-tpls-1.1.0.js"></script>
+<script src="/js/dependencies/angular-utf8-base64.js"></script>
+<script src="/js/dependencies/angular-countUp.js"></script>
+<script src="/js/dependencies/angular-animate.js"></script>
+<script src="/js/dependencies/angular-cookies.js"></script>
+<script src="/js/dependencies/angular-sanitize.min.js"></script>
+<script src="/js/dependencies/highcharts-ng.js"></script>
+<script src="/js/dependencies/highcharts.src.js"></script>
+<script src="/js/dependencies/exporting.js"></script>
+<script src="/js/dependencies/offline-csv.js"></script>
+<script src="/js/dependencies/export-csv.js"></script>
+<script src="/js/dependencies/funnel.js"></script>
+<script src="/js/dependencies/highlight.min.js"></script>
+<script src="/js/dependencies/angular-highlightjs.min.js"></script>
+<script src="/js/public/services/App_Core_Service.js"></script>
+<script src="/js/public/App_Module.js"></script>
+<script src="/js/public/controllers/App_Core_Controller.js"></script>
+<script src="/js/public/controllers/App_LandingPage_Controller.js"></script>
+<script src="/js/public/controllers/App_LandingDetailPage_Controller.js"></script>
+<script src="/js/public/controllers/App_Modal_Controller.js"></script>
+<!--SCRIPTS END-->
+
+<script src="//ihub.corp.ebay.com/static/libs/dssui/latest/lib/piwik.js" charset="UTF-8"></script>
+<script src="//nous.corp.ebay.com/nous-social/nous-login.min.js" defer></script>
+<script src="//ihub.corp.ebay.com/static/libs/dssui/latest/init.js" defer></script>
+<script src="//apis.seller.corp.ebay.com/sellerframworks.non_login.min.js" defer></script>
+</html>

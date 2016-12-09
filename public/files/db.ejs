@@ -1,0 +1,32 @@
+<table class="table table-striped table-bordered table-hover table-responsive " >
+    <thead>
+    <tr>
+        <th></th>
+        <th>Completion Rate</th>
+        <th>Photo Count per Draft</th>
+        <th>Avg Listing Time</th>
+        <th>Title Length per Draft</th>
+        <th>Error Count per Draft</th>
+        <th>ParentID</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat-start="i in items ">
+        <td >
+            <button class="btn btn-xs btn-default" ng-click="i.$expand=!i.$expand" ng-class="{'dropdown-toggle':!i.$expand, 'dropup':i.$expand}">
+                <span class="caret"></span>
+            </button>
+            {{i.item}}
+        </td>
+        <td>{{i.completionRate}}</td>
+        <td>{{i.photoCountPerDraft}}</td>
+        <td>{{i.avgListingTime}}</td>
+        <td>{{i.titleLengthPerDraft}}</td>
+        <td>{{i.errorCountPerDraft}}</td>
+        <td>{{i.parentid}}</td>
+    </tr>
+    <tr ng-repeat-end ng-show="i.$expand">
+        <td>{{i.item}}</td>
+    </tr>
+    </tbody>
+</table>

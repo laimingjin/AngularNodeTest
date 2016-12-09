@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<html ng-app="insightApp">
+<head>
+    <title>Insight</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/stylesheets/dependencies/font-awesome.min.css">
+    <link rel="stylesheet" href="/stylesheets/dependencies/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/dependencies/animate.css">
+    <link rel="stylesheet" href="/stylesheets/dependencies/hover-min.css">
+    <link rel="stylesheet" href="/stylesheets/dependencies/github.min.css">
+    <link rel="stylesheet" href="/stylesheets/dependencies/importer.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+<div ng-controller="LandingPageController"  class="containerWrap" ng-init="initial()">
+    <div class="container">
+        <!--filter-->
+        <nav class="navbar navbar-default navWrap">
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-left landingPageNav">
+
+                    <li class="navLiMargin">
+                        <label class="filterLabel">Listing Site</label>
+                        <div class="dropdown">
+                            <dropdown-multiselect type="0"  events="filterEvent" setting="filter_setting_single" options="filter_listingSite_dataSource" model="filter_listingSite_model"></dropdown-multiselect>
+                        </div>
+                    </li>
+
+                    <li class="navLiMargin">
+                        <label class="filterLabel">Seller Country</label>
+                        <div class="dropdown">
+                            <dropdown-multiselect type="0"  events="filterEvent" setting="filter_setting_single" options="filter_sellerCountry_dataSource" model="filter_sellerCountry_model"></dropdown-multiselect>
+
+                        </div>
+                    </li>
+
+                    <li class="navLiMargin">
+                        <label class="filterLabel">Seller Segment</label>
+                        <div class="dropdown">
+                            <dropdown-multiselect type="0"  events="filterEvent" setting="filter_setting_single" options="filter_sellerSegment_dataSource" model="filter_sellerSegment_model"></dropdown-multiselect>
+                        </div>
+                    </li>
+
+                    <li class="navLiMargin" style="position:relative">
+                        <label class="filterLabel">Listing Format</label>
+                        <div class="dropdown">
+                            <dropdown-multiselect type="0" events="filterEvent" setting="filter_setting_single" options="filter_listingFormat_dataSource" model="filter_listingFormat_model"></dropdown-multiselect>
+                        </div>
+                    </li>
+
+                    <li>
+                        <button type="button" class="btn btn-sm btn-primary applyFilterBtn" ng-click="applyFilter()">Apply</button>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+
+
+    </div>
+
+    <div class="container wrapPosition">
+        <div class="row ">
+            <div class="col-lg-7 ">
+
+                <ul class="nav nav-pills  zone">
+                    <div class="row" >
+                        <div class="levels" ng-repeat="level in levels">
+                            <button class="btn-link">{{level}}</button><i>-></i>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped table-bordered table-hover table-responsive " id="table1" ng-repeat="data in dataList">
+                        <thead >
+                        <tr>
+                            <th rowspan="3"></th>
+                            <th colspan="9"  style="background: #4682B4; color:#FFFFFF;" ng-click="nextLevel(levels,data.catagory)">{{data.catagory}}  <img src="/images/icon_plus.png" style="width:20px;height: 20px"></img> </th>
+                        </tr>
+                        <tr>
+                            <th colspan="3">Overall</th>
+                            <th colspan="3">C2C</th>
+                            <th colspan="3">B2C UD</th>
+                        </tr>
+                        <tr>
+                            <th>Actual</th>
+                            <th>WoW</th>
+                            <th>YoY</th>
+                            <th>Actual</th>
+                            <th>WoW</th>
+                            <th>YoY</th>
+                            <th>Actual</th>
+                            <th>WoW</th>
+                            <th>YoY</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="detail in data.details">
+                            <td>{{detail.name}}</td>
+                            <td >{{detail.Overall_Actual}}</td>
+                            <td>{{detail.Overall_WoW}}</td>
+                            <td>{{detail.Overall_YoY}}</td>
+                            <td>{{detail.B2B_Actual}}</td>
+                            <td>{{detail.B2B_WoW}}</td>
+                            <td>{{detail.B2B_YoY}}</td>
+                            <td>{{detail.C2C_Actual}}</td>
+                            <td>{{detail.C2C_WoW}}</td>
+                            <td ng-click="openGraph()">{{detail.C2C_YoY}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<!--<script src="/js/dependencies/sails.io.js"></script>-->
+<script src="/js/dependencies/jquery-2.1.4.min.js"></script>
+<script src="/js/dependencies/lodash.min.js"></script>
+<script src="/js/dependencies/bootstrap.min.js"></script>
+<script src="/js/dependencies/angular.min.js"></script>
+<script src="/js/dependencies/angular-route.js"></script>
+<script src="/js/dependencies/angular-multi-dropdown.js"></script>
+<script src="/js/dependencies/ui-bootstrap-tpls-1.1.0.js"></script>
+<script src="/js/dependencies/angular-utf8-base64.js"></script>
+<script src="/js/dependencies/angular-countUp.js"></script>
+<script src="/js/dependencies/angular-animate.js"></script>
+<script src="/js/dependencies/angular-cookies.js"></script>
+<script src="/js/dependencies/angular-sanitize.min.js"></script>
+<script src="/js/dependencies/highcharts-ng.js"></script>
+<script src="/js/dependencies/highcharts.src.js"></script>
+<script src="/js/dependencies/highcharts-more.js"></script>
+<script src="/js/dependencies/exporting.js"></script>
+<script src="/js/dependencies/export-csv.js"></script>
+<script src="/js/dependencies/funnel.js"></script>
+<script src="/js/dependencies/highlight.min.js"></script>
+<script src="/js/dependencies/angular-highlightjs.min.js"></script>
+<script src="/js/assets/LandingPage.js"></script>
+
+<script type="text/ng-template" id="myModelContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">模态框</h3>
+    </div>
+    <div class="modal-body">
+        <p>{{graph_title}}</p>
+
+        <highchart id="graph" config="config" style="min-width: 100px; height: 100px; margin: 0 auto"></highchart>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">确认</button>
+        <button class="btn btn-warning" ng-click="cancel()">退出</button>
+    </div>
+</script>
+</body>
+
+</html>

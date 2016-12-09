@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>StockChart</title>
+    <script src="javascripts/dependencies/angular.js"></script>
+    <script src="javascripts/dependencies/angular-route.js"></script>
+    <script src="javascripts/dependencies/highcharts.src.js"></script>
+    <script src="javascripts/dependencies/highcharts-ng.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+</head>
+<body ng-app="areaApp" ng-controller="DefaultController">
+<highchart id="container" config="areaRangeConfig" style="width: auto; height: auto; margin: 0 auto"></highchart>
+<script src="javascripts/assets/AreaRange.js"></script>
+</body>
+</html>
