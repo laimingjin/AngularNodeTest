@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap Test</title>
+    <!-- Bootstrap -->
+    <link href="../bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/index.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="../js/jquery3.1.1.min.js"></script>
+    <script src="../bootstrap-3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<ul class="breadcrumb">
+    <li><a href="#">Seller</a> </li>
+    <li><a href="#">Listing Tool</a> </li>
+    <li class="active">Selling Tool</li>
+</ul>
+</div>
+<div class="container ">
+<ul id="MyTab" class="nav nav-tabs">
+    <li class="active">
+        <a href="#SellingTool" data-toggle="tab">
+            Selling Tool
+        </a>
+    </li>
+    <li>
+        <a href="#SellingError" data-toggle="tab">
+            Selling Error
+        </a>
+    </li>
+    <li>
+        <a href="#eLVISError" data-toggle="tab">
+            eLVIS Error
+        </a>
+    </li>
+</ul>
+</div>
+
+<div class="tab-content container">
+    <div class=" tab-pane active " id="SellingTool">
+            <div class="form-group jumbotron">
+                <div class="col-xs-2">
+                    <label >Listing Model</label>
+                    <select class="col-xs-2 form-control ">
+                        <option>XXXX</option>
+                        <option>YYYY</option>
+                    </select>
+                </div>
+                <div class="col-xs-2">
+                    <label >Listing Device</label>
+                    <select class="col-xs-2 form-control ">
+                        <option>All</option>
+                        <option>X</option>
+                    </select>
+                </div>
+                <blockquote class="blockquote-reverse">
+                    <p>Date as of:2016－09-11 23:59:59</p>
+                    <footer>Expect to refresh in 01:49:01</footer>
+                </blockquote>
+            </div>
+
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="whole">
+     <div class="btn icon_block">
+        <a class="btn btn-large" href="#"><i class="glyphicon glyphicon-th-large"></i> </a>
+        <p>喜欢</p>
+    </div>
+    <div class="btn icon_block">
+        <a class="btn btn-large" href="#"><i class="glyphicon glyphicon-question-sign"></i> </a>
+        <p>Unknow</p>
+    </div>
+    </div>
+</div>
+<div class="container ">
+    <div class="whole">
+    <div class="line col-xs-2">
+        <select class="col-xs-2 form-control ">
+            <option>from 22-07-2016 to 22-08-2016</option>
+            <option>X</option>
+        </select>
+    </div>
+    <div class="line btn-toolbar" role="toolbar" >
+        <div class="btn-group">
+            <button class="btn btn-default active">Zoom</button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-default">1 Year</button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-default">1 Month</button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-default">YTD</button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-default">MAX</button>
+        </div>
+    </div>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Completion Rate</th>
+            <th>Photo Count per Draft</th>
+            <th>Avg Listing Time</th>
+            <th>Title Length per Draft</th>
+            <th>Error Count per Draft</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Total</td>
+            <td>3.78%</td>
+            <td>3.5</td>
+            <td>60s</td>
+            <td>20.5</td>
+            <td>2.3</td>
+        </tr>
+        <tr>
+            <td>SYI+BOLD</td>
+            <td>2.62%</td>
+            <td>3.6</td>
+            <td>40s</td>
+            <td>21.3</td>
+            <td>2.2</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+
+</body>
+</html>
